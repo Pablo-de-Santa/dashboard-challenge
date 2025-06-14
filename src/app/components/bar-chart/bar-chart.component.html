@@ -1,0 +1,10 @@
+<h3>📊 Bar Chart</h3>
+<div class="bar-container">
+  <div
+    *ngFor="let item of data()"
+    class="bar"
+    [style.height.%]="item.value / max() * 100"
+  >
+    {{ item.label }} ({{ item.value }})
+  </div>
+</div>

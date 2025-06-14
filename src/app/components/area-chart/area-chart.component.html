@@ -1,0 +1,15 @@
+<h3>📈 Area Chart ({{ selectedRange() }})</h3>
+
+<select [value]="selectedRange()" (change)="updateRange($event)">
+    <option *ngFor="let range of ranges" [value]="range">{{ range }}</option>
+  </select>
+
+<svg width="100%" height="200">
+  <polyline
+    *ngIf="areaData().length"
+    [attr.points]="getSvgPoints()"
+    fill="rgba(0, 150, 255, 0.3)"
+    stroke="blue"
+    stroke-width="2"
+  ></polyline>
+</svg>

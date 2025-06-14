@@ -1,0 +1,21 @@
+<h3>💡 Avg Ticket Size</h3>
+
+<svg viewBox="0 0 32 32" width="200" height="200" class="pie-chart">
+  <circle
+    *ngFor="let slice of getPieSlices()"
+    r="16"
+    cx="16"
+    cy="16"
+    fill="transparent"
+    [attr.stroke]="slice.color"
+    stroke-width="32"
+    [attr.stroke-dasharray]="slice.percent + ' ' + (100 - slice.percent)"
+    [attr.stroke-dashoffset]="-slice.offset"
+  ></circle>
+</svg>
+
+<ul>
+  <li *ngFor="let slice of getPieSlices()" [style.color]="slice.color">
+    {{ slice.label }}
+  </li>
+</ul>
