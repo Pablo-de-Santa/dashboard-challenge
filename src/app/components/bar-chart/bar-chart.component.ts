@@ -3,11 +3,11 @@ import { ChartDataService } from '../../services/chart-data.service';
 import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-bar-chart',
-  standalone: true,
-  imports: [CommonModule],
-  templateUrl: './bar-chart.component.html',
-  styleUrl: './bar-chart.component.scss'
+    selector: 'app-bar-chart',
+    standalone: true,
+    imports: [CommonModule],
+    templateUrl: './bar-chart.component.html',
+    styleUrl: './bar-chart.component.scss'
 })
 export class BarChartComponent {
   data = signal<any[]>([]);

@@ -3,11 +3,11 @@ import { CommonModule } from '@angular/common';
 import { ChartDataService } from '../../services/chart-data.service';
 
 @Component({
-  selector: 'app-custom-chart',
-  standalone: true,
-  imports: [CommonModule],
-  templateUrl: './custom-chart.component.html',
-  styleUrl: './custom-chart.component.scss'
+    selector: 'app-custom-chart',
+    standalone: true,
+    imports: [CommonModule],
+    templateUrl: './custom-chart.component.html',
+    styleUrl: './custom-chart.component.scss'
 })
 export class CustomChartComponent {
   data = signal<{ type: string; value: number }[]>([]);

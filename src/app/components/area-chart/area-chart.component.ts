@@ -4,11 +4,11 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-area-chart',
-  standalone: true,
-  imports: [FormsModule, CommonModule],
-  templateUrl: './area-chart.component.html',
-  styleUrl: './area-chart.component.scss',
+    selector: 'app-area-chart',
+    standalone: true,
+    imports: [FormsModule, CommonModule],
+    templateUrl: './area-chart.component.html',
+    styleUrl: './area-chart.component.scss'
 })
 export class AreaChartComponent {
   selectedRange = signal('last-month');
