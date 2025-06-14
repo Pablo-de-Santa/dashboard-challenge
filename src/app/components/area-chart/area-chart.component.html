@@ -1,15 +1,74 @@
-<h3>📈 Area Chart ({{ selectedRange() }})</h3>
+<div class="chart-controls">
+    <select [value]="selectedRange()" (change)="updateRange($event)">
+      <option *ngFor="let range of ranges" [value]="range">{{ range }}</option>
+    </select>
+  
+    <div class="zoom-controls">
+      <button (click)="zoomOut()">➖</button>
+      <button (click)="zoomIn()">➕</button>
+      <button (click)="resetZoom()">Reset</button>
+    </div>
+  </div>
 
-<select [value]="selectedRange()" (change)="updateRange($event)">
-    <option *ngFor="let range of ranges" [value]="range">{{ range }}</option>
-  </select>
-
-<svg width="100%" height="200">
-  <polyline
-    *ngIf="areaData().length"
-    [attr.points]="getSvgPoints()"
-    fill="rgba(0, 150, 255, 0.3)"
-    stroke="blue"
-    stroke-width="2"
-  ></polyline>
-</svg>
+<div class="chart-wrapper">
+    <div class="chart-legend">
+      <div class="metric">
+        <strong>$17,881</strong>
+        <span class="delta up">+1.12%</span>
+        <small>All Customers</small>
+      </div>
+      <div class="metric">
+        <strong>$8,913</strong>
+        <span class="delta up">+1.12%</span>
+        <small>Loyalty Customers</small>
+      </div>
+    </div>
+  
+    <div class="chart-container">
+      <svg [attr.viewBox]="'0 0 600 200'" preserveAspectRatio="none" class="area-chart">
+        <defs>
+            <linearGradient id="areaGradient" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="rgba(0,150,255,0.4)" />
+              <stop offset="100%" stop-color="rgba(0,150,255,0)" />
+            </linearGradient>
+          </defs>
+        <!-- Horizontal grid lines -->
+        <g class="grid-lines">
+          <line *ngFor="let y of [0, 0.25, 0.5, 0.75, 1]" 
+                [attr.y1]="200 * y" 
+                [attr.y2]="200 * y" 
+                x1="0" 
+                x2="600" 
+                stroke="#ccc" 
+                stroke-width="0.5"
+                stroke-dasharray="4,2"
+          />
+        </g>
+  
+        <!-- Area chart path -->
+        <path
+          *ngIf="areaData().length"
+          [attr.d]="svgPath()"
+          fill="url(#areaGradient)"
+          stroke="none"
+          stroke-width="2"
+          class="area-path"
+        ></path>
+      </svg>        
+  
+      <!-- Y-axis labels -->
+      <div class="y-axis">
+        <span *ngFor="let label of yTicks()">
+          {{ label | number }}
+        </span>
+      </div>
+  
+      <!-- X-axis labels -->
+      <div class="x-axis">
+        <span *ngFor="let label of xLabels()">
+          {{ label }}
+        </span>
+      </div>
+    </div>
+  </div>
+  

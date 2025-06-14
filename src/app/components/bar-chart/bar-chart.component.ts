@@ -1,13 +1,14 @@
-import { Component, computed, signal, effect } from '@angular/core';
+// bar-chart.component.ts
+import { Component, signal, computed, effect } from '@angular/core';
 import { ChartDataService } from '../../services/chart-data.service';
 import { CommonModule } from '@angular/common';
 
 @Component({
-    selector: 'app-bar-chart',
-    standalone: true,
-    imports: [CommonModule],
-    templateUrl: './bar-chart.component.html',
-    styleUrl: './bar-chart.component.scss'
+  selector: 'app-bar-chart',
+  standalone: true,
+  imports: [CommonModule],
+  templateUrl: './bar-chart.component.html',
+  styleUrl: './bar-chart.component.scss'
 })
 export class BarChartComponent {
   data = signal<any[]>([]);
@@ -22,6 +23,6 @@ export class BarChartComponent {
       this.chartService.getBarChartData(1).subscribe(data => {
         this.data.set(data);
       });
-    }, { allowSignalWrites: true });
+    });
   }
 }
