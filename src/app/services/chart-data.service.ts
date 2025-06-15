@@ -11,11 +11,11 @@ export class ChartDataService {
     return this.http.get<any[]>(`/assets/data/area/${range}.json`);
   }
 
-  getBarChartData(version: number): Observable<any[]> {
-    return this.http.get<any[]>(`/assets/data/bar/data-${version}.json`);
+  getBarChartDataByRange(range: string): Observable<any[]> {
+    return this.http.get<any[]>(`/assets/data/bar/${range}.json`);
   }
 
-  getCustomChartData(version: number): Observable<any[]> {
-    return this.http.get<any[]>(`/assets/data/custom/custom-${version}.json`);
+  getCustomChartData(range: string): Observable<any[]> {
+    return this.http.get<any[]>(`/assets/data/custom/${range}.json`);
   }
 }

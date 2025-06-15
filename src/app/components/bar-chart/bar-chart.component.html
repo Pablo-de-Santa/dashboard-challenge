@@ -1,10 +1,65 @@
-<h3>📊 Bar Chart</h3>
-<div class="bar-container">
-  <div
-    *ngFor="let item of data()"
-    class="bar"
-    [style.height.%]="item.value / max() * 100"
-  >
-    {{ item.label }} ({{ item.value }})
+<section class="holyWrapper">
+  <div class="chart-controls">
+    <mat-form-field appearance="outline" class="range-select">
+      <mat-label>Select Range</mat-label>
+      <mat-select [value]="selectedRange()" (selectionChange)="updateRange($event)">
+        <mat-option *ngFor="let range of ranges" [value]="range">{{ range }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <div class="zoom-controls">
+      <button mat-raised-button (click)="zoomOut()">➖</button>
+      <button mat-raised-button (click)="zoomIn()">➕</button>
+      <button mat-raised-button (click)="resetZoom()">Reset</button>
+    </div>
   </div>
-</div>
+
+  <div class="chart-wrapper">
+    <div class="chart-legend">
+      <div class="metric">
+        <strong>{{ totalAll() | number }}</strong>
+        <span class="delta" [class.up]="deltaAll() > 0" [class.down]="deltaAll() < 0">
+          {{ deltaAll() | number: '1.2-2' }}%
+        </span>
+        <small class="allCustomers">All Customers</small>
+      </div>
+      <div class="metric">
+        <strong>{{ totalLoyalty() | number }}</strong>
+        <span class="delta" [class.up]="deltaLoyalty() > 0" [class.down]="deltaLoyalty() < 0">
+          {{ deltaLoyalty() | number: '1.2-2' }}%
+        </span>
+        <small class="loyaltyCustomers">Loyalty Customers</small>
+      </div>
+    </div>
+    <div class="chart-container">
+      <div class="y-axis" [class.fade-out]="isFading()">
+        <span *ngFor="let label of yTicks()">{{ label }}</span>
+      </div>
+    
+      <!-- 👇 Horizontal grid lines -->
+      <div class="grid-lines">
+        <div *ngFor="let y of [0, 0.25, 0.5, 0.75, 1]" class="grid-line" [style.top.%]="y * 100"></div>
+      </div>
+    
+      <div class="bar-chart" [class.animate-bars]="shouldAnimateBars()">
+        <div class="bar-group" *ngFor="let item of visibleData()">
+          <div
+          class="bar all"
+          [style.height.px]="(item.all / scaledMaxValue()) * chartHeight"
+          title="All: {{ item.all }}"
+        ></div>
+        <div
+          class="bar loyalty"
+          [style.height.px]="(item.loyalty / scaledMaxValue()) * chartHeight"
+          title="Loyalty: {{ item.loyalty }}"
+        ></div>
+        </div>
+      </div>
+    
+      <div class="x-axis" [class.fade-out]="isFading()">
+        <span *ngFor="let label of xLabels()">{{ label }}</span>
+      </div>
+    </div>
+    
+  </div>
+</section>

@@ -1,19 +1,206 @@
-.bar-container {
+// bar-chart.component.scss
+.chart-legend {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+
+  .metric {
+    strong {
+      font-size: 1.25rem;
+    }
+
+    .delta {
+      font-weight: 100;
+      margin-left: 0.25rem;
+
+      &.up {
+        color: green;
+      }
+
+      &.down {
+        color: red;
+      }
+    }
+
+    small {
+      display: block;
+      color: #666;
+      font-size: 0.75rem;
+    }
+
+    .allCustomers {
+      text-decoration: underline;
+      text-decoration-color: rgba(0, 150, 255, 0.85);
+      text-decoration-thickness: 4px;
+      text-underline-offset: 4px;
+    }
+
+    .loyaltyCustomers {
+      text-decoration: underline;
+      text-decoration-color: rgba(255, 235, 0, 0.85);
+      text-decoration-thickness: 4px;
+      text-underline-offset: 4px;
+    }
+  }
+}
+
+
+@keyframes zoomGrow {
+  0% {
+    transform: scaleY(0);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scaleY(1);
+    opacity: 1;
+  }
+}
+
+.animate-bars .bar {
+  animation: zoomGrow 0.3s ease-in-out;
+}
+
+.chart-controls {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+  justify-content: space-between;
+
+  @media screen and (max-width: 475px) {
+    justify-content: center;
+  }
+
+  .range-select {
+    min-width: 200px;
+  }
+
+  .zoom-controls {
     display: flex;
-    align-items: flex-end;
-    gap: 1rem;
-    height: 200px;
-    border-left: 1px solid #333;
-    border-bottom: 1px solid #333;
-    padding: 1rem;
+    gap: 0.5rem;
   }
+}
+
+.chart-wrapper {
+  border: 1px solid #eee;
+  border-radius: 10px;
+  padding: 1rem;
+  background: white;
+  font-family: sans-serif;
+  overflow-x: auto;
+}
+
+.chart-container {
+  position: relative;
+  width: calc(100% - 3rem);
+  margin-left: 3rem;
+  height: 300px;
+}
+
+// Axes styles
+.x-axis, .y-axis {
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  opacity: 1;
+  transform: translateY(0);
   
+  &.fade-out {
+    opacity: 0;
+    transform: translateY(5px);
+    transition: opacity 0.3s ease-in, transform 0.3s ease-in;
+  }
+}
+
+.y-axis {
+  position: absolute;
+  left: -3rem;
+  top: 0;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  font-size: 0.75rem;
+  color: #666;
+}
+
+.x-axis {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.75rem;
+  color: #666;
+  position: absolute;
+  bottom: -1rem;
+
+  span {
+    padding: 0 0.5rem;
+  }
+
+  @media (max-width: 450px) {
+    font-size: 0.45rem;
+  }
+}
+
+// Bar chart specific styles
+.bar-chart {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  height: 100%;
+  width: 100%;
+  gap: 4px;
+  position: relative;
+  z-index: 1;
+
+  @media screen and (max-width: 475px) {
+    gap: 0.1rem;
+  }
+
+  .bar-group {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    flex: 1 1 auto;
+    height: 100%;
+    gap: 2px;
+    min-width: 8px; // Ensure bars remain visible
+    @media screen and (max-width: 475px) {
+      min-width: 4px;
+    }
+  }
+
   .bar {
-    width: 50px;
-    background: teal;
-    color: white;
-    text-align: center;
-    font-size: 0.8rem;
-    transition: height 0.6s ease-in-out;
-  }
+    width: 100%;
+    border-radius: 4px 4px 0 0;
+    transition: height 0.4s ease-in-out;
+    will-change: height;
   
+    &.all {
+      background-color: rgba(0, 150, 255, 0.85);
+    }
+  
+    &.loyalty {
+      background-color: rgba(255, 235, 0, 0.85);
+    }
+  }
+}
+
+.grid-lines {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+
+  .grid-line {
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 1px;
+    border-top: 1px dashed rgba(0, 0, 0, 0.1);
+    transform: translateY(-50%);
+  }
+}

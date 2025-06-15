@@ -1,42 +1,54 @@
-<div class="chart-controls">
-    <select [value]="selectedRange()" (change)="updateRange($event)">
-      <option *ngFor="let range of ranges" [value]="range">{{ range }}</option>
-    </select>
+<section class="holyWrapper">
+  <div class="chart-controls">
+    <mat-form-field appearance="outline" class="range-select">
+      <mat-label>Select Range</mat-label>
+      <mat-select [value]="selectedRange()" (selectionChange)="updateRange($event)">
+        <mat-option *ngFor="let range of ranges" [value]="range">{{ range }}</mat-option>
+      </mat-select>
+    </mat-form-field>
   
     <div class="zoom-controls">
-      <button (click)="zoomOut()">➖</button>
-      <button (click)="zoomIn()">➕</button>
-      <button (click)="resetZoom()">Reset</button>
+      <button mat-raised-button (click)="zoomOut()">➖</button>
+      <button mat-raised-button (click)="zoomIn()">➕</button>
+      <button mat-raised-button (click)="resetZoom()">Reset</button>
     </div>
-  </div>
+</div>
 
 <div class="chart-wrapper">
-    <div class="chart-legend">
-      <div class="metric">
-        <strong>$17,881</strong>
-        <span class="delta up">+1.12%</span>
-        <small>All Customers</small>
-      </div>
-      <div class="metric">
-        <strong>$8,913</strong>
-        <span class="delta up">+1.12%</span>
-        <small>Loyalty Customers</small>
-      </div>
+  <div class="chart-legend">
+    <div class="metric">
+      <strong>{{ totalAll() | number }}</strong>
+      <span class="delta" [class.up]="deltaAll() > 0" [class.down]="deltaAll() < 0">
+        {{ deltaAll() | number: '1.2-2' }}%
+      </span>
+      <small class="allCustomers">All Customers</small>
     </div>
+    <div class="metric">
+      <strong>{{ totalLoyalty() | number }}</strong>
+      <span class="delta" [class.up]="deltaLoyalty() > 0" [class.down]="deltaLoyalty() < 0">
+        {{ deltaLoyalty() | number: '1.2-2' }}%
+      </span>
+      <small class="loyaltyCustomers">Loyalty Customers</small>
+    </div>
+  </div>
   
     <div class="chart-container">
-      <svg [attr.viewBox]="'0 0 600 200'" preserveAspectRatio="none" class="area-chart">
+      <svg [attr.viewBox]="'0 0 600 300'" preserveAspectRatio="none" class="area-chart">
         <defs>
-            <linearGradient id="areaGradient" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stop-color="rgba(0,150,255,0.4)" />
-              <stop offset="100%" stop-color="rgba(0,150,255,0)" />
+            <linearGradient id="areaGradientAll" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="rgba(0,150,255,0.85)" />
+              <stop offset="100%" stop-color="rgba(0,150,255,0.1)" />
+            </linearGradient>
+            <linearGradient id="areaGradientLoyalty" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="rgba(255, 235, 0, 0.85)" />
+              <stop offset="100%" stop-color="rgba(255, 235, 0, 0.1)" />
             </linearGradient>
           </defs>
         <!-- Horizontal grid lines -->
         <g class="grid-lines">
           <line *ngFor="let y of [0, 0.25, 0.5, 0.75, 1]" 
-                [attr.y1]="200 * y" 
-                [attr.y2]="200 * y" 
+                [attr.y1]="300 * y" 
+                [attr.y2]="300 * y" 
                 x1="0" 
                 x2="600" 
                 stroke="#ccc" 
@@ -47,28 +59,42 @@
   
         <!-- Area chart path -->
         <path
-          *ngIf="areaData().length"
-          [attr.d]="svgPath()"
-          fill="url(#areaGradient)"
-          stroke="none"
-          stroke-width="2"
-          class="area-path"
-        ></path>
+            *ngIf="areaData().length"
+            [attr.d]="svgPath().all"
+            fill="url(#areaGradientAll)"
+            stroke="url(#areaGradientAll)"
+            stroke-width="2"
+            class="area-path"
+            [class.animate-path]="shouldAnimatePath()"
+            [class.fade-out]="isFading()"
+        />
+        <path
+            *ngIf="areaData().length"
+            [attr.d]="svgPath().loyalty"
+            fill="url(#areaGradientLoyalty)"
+            stroke="url(#areaGradientLoyalty)"
+            stroke-width="2"
+            class="area-path"
+            [class.animate-path]="shouldAnimatePath()"
+            [class.fade-out]="isFading()"
+        />
       </svg>        
   
       <!-- Y-axis labels -->
-      <div class="y-axis">
+      <div class="y-axis" [class.fade-out]="isFading()">
         <span *ngFor="let label of yTicks()">
           {{ label | number }}
         </span>
       </div>
   
-      <!-- X-axis labels -->
-      <div class="x-axis">
-        <span *ngFor="let label of xLabels()">
-          {{ label }}
-        </span>
-      </div>
+        <!-- X-axis labels -->
+        <div class="x-axis" [class.fade-out]="isFading()">
+          <span *ngFor="let label of xLabels()">
+            {{ label }}
+          </span>
+        </div>
+  
     </div>
   </div>
   
+</section>
