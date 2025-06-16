@@ -1,5 +1,8 @@
-// bar-chart.component.scss
-.chart-legend {
+h2 {
+  text-align: center;
+}
+
+.chartLegend {
   display: flex;
   justify-content: space-between;
   margin-bottom: 2rem;
@@ -13,13 +16,8 @@
       font-weight: 100;
       margin-left: 0.25rem;
 
-      &.up {
-        color: green;
-      }
-
-      &.down {
-        color: red;
-      }
+      &.up { color: green; }
+      &.down { color: red; }
     }
 
     small {
@@ -29,38 +27,20 @@
     }
 
     .allCustomers {
-      text-decoration: underline;
-      text-decoration-color: rgba(0, 150, 255, 0.85);
+      text-decoration: underline rgba(0, 150, 255, 0.85);
       text-decoration-thickness: 4px;
       text-underline-offset: 4px;
     }
 
     .loyaltyCustomers {
-      text-decoration: underline;
-      text-decoration-color: rgba(255, 235, 0, 0.85);
+      text-decoration: underline rgba(255, 235, 0, 0.85);
       text-decoration-thickness: 4px;
       text-underline-offset: 4px;
     }
   }
 }
 
-
-@keyframes zoomGrow {
-  0% {
-    transform: scaleY(0);
-    opacity: 0.8;
-  }
-  100% {
-    transform: scaleY(1);
-    opacity: 1;
-  }
-}
-
-.animate-bars .bar {
-  animation: zoomGrow 0.3s ease-in-out;
-}
-
-.chart-controls {
+.chartControls {
   display: flex;
   gap: 1rem;
   align-items: center;
@@ -68,42 +48,40 @@
   margin-bottom: 1rem;
   justify-content: space-between;
 
-  @media screen and (max-width: 475px) {
-    justify-content: center;
-  }
-
-  .range-select {
+  .rangeSelect {
     min-width: 200px;
   }
 
-  .zoom-controls {
+  .zoomControls {
     display: flex;
     gap: 0.5rem;
   }
+
+  @media screen and (max-width: 475px) {
+    justify-content: center;
+  }
 }
 
-.chart-wrapper {
+.chartWrapper {
   border: 1px solid #eee;
   border-radius: 10px;
   padding: 1rem;
   background: white;
-  font-family: sans-serif;
   overflow-x: auto;
 }
 
-.chart-container {
+.chartContainer {
   position: relative;
   width: calc(100% - 3rem);
   margin-left: 3rem;
   height: 300px;
 }
 
-// Axes styles
 .x-axis, .y-axis {
   transition: opacity 0.3s ease, transform 0.3s ease;
   opacity: 1;
   transform: translateY(0);
-  
+
   &.fade-out {
     opacity: 0;
     transform: translateY(5px);
@@ -141,8 +119,7 @@
   }
 }
 
-// Bar chart specific styles
-.bar-chart {
+.barChart {
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
@@ -152,11 +129,7 @@
   position: relative;
   z-index: 1;
 
-  @media screen and (max-width: 475px) {
-    gap: 0.1rem;
-  }
-
-  .bar-group {
+  .barGroup {
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
@@ -164,10 +137,7 @@
     flex: 1 1 auto;
     height: 100%;
     gap: 2px;
-    min-width: 8px; // Ensure bars remain visible
-    @media screen and (max-width: 475px) {
-      min-width: 4px;
-    }
+    min-width: 8px;
   }
 
   .bar {
@@ -175,18 +145,21 @@
     border-radius: 4px 4px 0 0;
     transition: height 0.4s ease-in-out;
     will-change: height;
-  
-    &.all {
-      background-color: rgba(0, 150, 255, 0.85);
-    }
-  
-    &.loyalty {
-      background-color: rgba(255, 235, 0, 0.85);
+
+    &.all { background-color: rgba(0, 150, 255, 0.85); }
+    &.loyalty { background-color: rgba(255, 235, 0, 0.85); }
+  }
+
+  @media screen and (max-width: 475px) {
+    gap: 0.1rem;
+    
+    .barGroup {
+      min-width: 4px;
     }
   }
 }
 
-.grid-lines {
+.gridLines {
   position: absolute;
   top: 0;
   left: 0;
@@ -195,7 +168,7 @@
   pointer-events: none;
   z-index: 0;
 
-  .grid-line {
+  .gridLine {
     position: absolute;
     left: 0;
     right: 0;
@@ -203,4 +176,19 @@
     border-top: 1px dashed rgba(0, 0, 0, 0.1);
     transform: translateY(-50%);
   }
+}
+
+@keyframes zoomGrow {
+  0% {
+    transform: scaleY(0);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scaleY(1);
+    opacity: 1;
+  }
+}
+
+.animate-bars .bar {
+  animation: zoomGrow 0.3s ease-in-out;
 }

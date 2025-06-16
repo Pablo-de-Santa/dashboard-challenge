@@ -1,63 +1,53 @@
-.chart-wrapper {
+h2, h3 {
+  text-align: center;
+}
+
+h3 {
+  margin: 0 0 1rem 0;
+  color: #333;
+}
+
+.chartWrapper {
   border: 1px solid #eee;
   border-radius: 10px;
   padding: 1rem;
   background: white;
-  font-family: sans-serif;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-h3 {
-  margin: 0 0 1rem 0;
-  text-align: center;
-  color: #333;
+.chartControls {
+  display: flex;
+  @media screen and (max-width: 475px) {
+    justify-content: center;
+  }
 }
 
-.pie-container {
+.pieContainer {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 1rem;
   transition: opacity 0.3s ease;
-  
+
   &.fade-out {
     opacity: 0;
   }
 
   @media (min-width: 768px) {
     flex-direction: row;
-    align-items: center;
     justify-content: center;
   }
 }
 
-.pie-chart {
+.pieChart {
   transform: rotate(-90deg);
   border-radius: 50%;
   min-width: 200px;
 }
 
-.legend-item {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-size: 0.9rem;
-}
-
-.legend-color {
-  display: inline-block;
-  width: 16px;
-  height: 16px;
-  border-radius: 4px;
-}
-
-.legend-label {
-  flex: 1;
-}
-
-.chart-legend {
+.chartLegend {
   display: flex;
   justify-content: space-between;
   width: 100%;
@@ -71,14 +61,7 @@ h3 {
     .delta {
       font-weight: 100;
       margin-left: 0.25rem;
-
-      &.up {
-        color: green;
-      }
-
-      &.down {
-        color: red;
-      }
+      color: gray;
     }
 
     small {
@@ -88,17 +71,29 @@ h3 {
     }
 
     .allCustomers {
-      text-decoration: underline;
-      text-decoration-color: rgba(0, 150, 255, 0.85);
+      text-decoration: underline rgba(0, 150, 255, 0.85);
       text-decoration-thickness: 4px;
       text-underline-offset: 4px;
     }
 
     .loyaltyCustomers {
-      text-decoration: underline;
-      text-decoration-color: rgba(255, 235, 0, 0.85);
+      text-decoration: underline rgba(255, 235, 0, 0.85);
       text-decoration-thickness: 4px;
       text-underline-offset: 4px;
     }
   }
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.legend-color {
+  width: 16px;
+  height: 16px;
+  border-radius: 4px;
+  display: inline-block;
 }

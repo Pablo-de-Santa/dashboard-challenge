@@ -1,153 +1,150 @@
-.area-path {
-    stroke-dasharray: 1000;
-    stroke-dashoffset: 0;
-    transition: d 0.3s ease;
-    will-change: stroke-dashoffset;
-  }
+h2 {
+  text-align: center;
+}
+
+.areaPath {
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 0;
+  transition: d 0.3s ease;
+  will-change: stroke-dashoffset;
   
-  .animate-path {
+  &.animate-path {
     animation: drawPath 0.6s cubic-bezier(0.65, 0, 0.35, 1) forwards;
   }
-  
-  @keyframes drawPath {
-    from {
-      stroke-dashoffset: 1000;
+}
+
+@keyframes drawPath {
+  from {
+    stroke-dashoffset: 1000;
+    opacity: 0;
+  }
+  to {
+    stroke-dashoffset: 0;
+    opacity: 1;
+  }
+}
+
+.chartControls {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+
+  @media screen and (max-width: 475px) {
+    justify-content: center;
+  }
+
+  .rangeSelect {
+    min-width: 200px;
+  }
+
+  .zoomControls {
+    display: flex;
+    gap: 0.5rem;
+  }
+}
+
+.chartWrapper {
+  border: 1px solid #eee;
+  border-radius: 10px;
+  padding: 1rem;
+  background: white;
+  max-height: 100dvh;
+}
+
+.chartLegend {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+
+  .metric {
+    strong {
+      font-size: 1.25rem;
+    }
+
+    .delta {
+      font-weight: 100;
+      margin-left: 0.25rem;
+
+      &.up { color: green; }
+      &.down { color: red; }
+    }
+
+    small {
+      display: block;
+      color: #666;
+      font-size: 0.75rem;
+    }
+
+    .allCustomers {
+      text-decoration: underline;
+      text-decoration-color: rgba(0, 150, 255, 0.85);
+      text-decoration-thickness: 4px;
+      text-underline-offset: 4px;
+    }
+
+    .loyaltyCustomers {
+      text-decoration: underline;
+      text-decoration-color: rgba(255, 235, 0, 0.85);
+      text-decoration-thickness: 4px;
+      text-underline-offset: 4px;
+    }
+  }
+}
+
+.chartContainer {
+  position: relative;
+  width: calc(100% - 3rem);
+  left: 3rem;
+  height: 300px;
+
+  .areaChart {
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+  }
+
+  .x-axis, .y-axis {
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    opacity: 1;
+    transform: translateY(0);
+
+    &.fade-out {
       opacity: 0;
-    }
-    to {
-      stroke-dashoffset: 0;
-      opacity: 1;
+      transform: translateY(5px);
+      transition: opacity 0.3s ease-in, transform 0.3s ease-in;
     }
   }
-.chart-controls {
+
+  .y-axis {
+    position: absolute;
+    left: -3rem;
+    top: 0;
+    height: 100%;
     display: flex;
-    gap: 1rem;
-    align-items: center;
-    flex-wrap: wrap;  
+    flex-direction: column;
     justify-content: space-between;
-    margin-bottom: 1rem;
-
-    @media screen and (max-width: 475px) {
-      justify-content: center;
-    }
-    .range-select {
-      min-width: 200px;
-    }
-  
-    .zoom-controls {
-      display: flex;
-      gap: 0.5rem;
-    }
+    font-size: 0.75rem;
+    color: #666;
   }
 
-.chart-wrapper {
-    border: 1px solid #eee;
-    border-radius: 10px;
-    padding: 1rem;
-    background: white;
-    font-family: sans-serif;
-    max-height: 100dvh;
-  }
-  
-  .chart-legend {
+  .x-axis {
+    width: 100%;
     display: flex;
     justify-content: space-between;
-    margin-bottom: 2rem;
-  
-    .metric {
-      strong {
-        font-size: 1.25rem;
-      }
+    font-size: 0.75rem;
+    color: #666;
+    position: absolute;
+    bottom: -1rem;
 
-      .delta {
-        font-weight: 100;
-        margin-left: 0.25rem;
-      
-        &.up {
-          color: green;
-        }
-      
-        &.down {
-          color: red;
-        }
-      }
-  
-      small {
-        display: block;
-        color: #666;
-        font-size: 0.75rem;
-      }
+    @media (max-width: 450px) {
+      font-size: 0.45rem;
+    }
 
-      .allCustomers {
-        color: inherit;
-        text-decoration: underline;
-        text-decoration-color: rgba(0, 150, 255, 0.85);
-        text-decoration-thickness: 4px;
-        text-underline-offset: 4px;
-      }
-      
-      .loyaltyCustomers {
-        color: inherit;
-        text-decoration: underline;
-        text-decoration-color: rgba(255, 235, 0, 0.85);
-        text-decoration-thickness: 4px;
-        text-underline-offset: 4px;
-      }
+    span {
+      padding: 0 0.5rem;
     }
   }
-  
-  .chart-container {
-    position: relative;
-    width: calc(100% - 3rem);
-    left: 3rem;
-    height: 300px;
-
-    .area-chart {
-      width: 100%;
-      height: 100%;
-      z-index: 1;
-    }
-
-    .x-axis, .y-axis {
-        transition: opacity 0.3s ease, transform 0.3s ease;
-        opacity: 1;
-        transform: translateY(0);
-        
-        &.fade-out {
-          opacity: 0;
-          transform: translateY(5px);
-          transition: opacity 0.3s ease-in, transform 0.3s ease-in;
-        }
-      }
-  
-    .y-axis {
-      position: absolute;
-      left: -3rem;
-      top: 0;
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      font-size: 0.75rem;
-      color: #666;
-    }
-  
-    .x-axis {
-      width: 100%;
-      display: flex;
-      justify-content: space-between;
-      font-size: 0.75rem;
-      color: #666;
-      position: absolute;
-      bottom: -1rem;
-
-      @media (max-width: 450px) {
-        font-size: 0.45rem;
-      }
-
-      span{
-        padding: 0 0.5rem;
-      }
-    }
-  }
-  
+}

@@ -1,15 +1,19 @@
 <section class="holyWrapper">
-  <div class="chart-controls">
-    <mat-form-field appearance="outline" class="range-select">
+  <h2>Average Ticket Size</h2>
+
+  <div class="chartControls">
+    <mat-form-field appearance="outline" class="rangeSelect">
       <mat-label>Select Range</mat-label>
       <mat-select [value]="selectedRange()" (selectionChange)="updateRange($event)">
-        <mat-option *ngFor="let range of ranges" [value]="range">{{ range }}</mat-option>
+        <mat-option *ngFor="let range of ranges" [value]="range.value">
+          {{ range.label }}
+        </mat-option>
       </mat-select>
     </mat-form-field>
   </div>
 
-  <div class="chart-wrapper">
-    <div class="chart-legend">
+  <div class="chartWrapper">
+    <div class="chartLegend">
       <div class="metric">
         <strong>$ {{ totalAll() | number }}</strong>
         <span class="delta" [class.up]="deltaAll() > 0" [class.down]="deltaAll() < 0">
@@ -17,6 +21,7 @@
         </span>
         <small class="allCustomers">All Customers</small>
       </div>
+
       <div class="metric">
         <strong>$ {{ totalLoyalty() | number }}</strong>
         <span class="delta" [class.up]="deltaLoyalty() > 0" [class.down]="deltaLoyalty() < 0">
@@ -25,13 +30,11 @@
         <small class="loyaltyCustomers">Loyalty Customers</small>
       </div>
     </div>
-    
-    
-    <div class="pie-container" [class.fade-out]="isFading()">
+
+    <div class="pieContainer" [class.fade-out]="isFading()">
       <ng-container *ngIf="pieSlices().length > 0; else noData">
-        <svg viewBox="0 0 32 32" width="200" height="200" class="pie-chart">
-          <circle
-            *ngFor="let slice of pieSlices()"
+        <svg viewBox="0 0 32 32" width="200" height="200" class="pieChart">
+          <circle *ngFor="let slice of pieSlices()"
             r="16"
             cx="16"
             cy="16"
@@ -39,13 +42,11 @@
             [attr.stroke]="slice.color"
             stroke-width="32"
             [attr.stroke-dasharray]="slice.percent + ' ' + (100 - slice.percent)"
-            [attr.stroke-dashoffset]="-slice.offset"
-          >
+            [attr.stroke-dashoffset]="-slice.offset">
           </circle>
         </svg>
       </ng-container>
-      
-      
+
       <ng-template #noData>
         <div class="no-data-message">
           No data available for selected range
